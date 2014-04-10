@@ -14,23 +14,30 @@ CONFIG += c++11
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    mainwindowcontroller.cpp \
-    additemdialog.cpp \
     model/gobject.cpp \
-    model/line.cpp \
     model/gpoint.cpp \
-    test/model/testgpoint.cpp \
-    test/model/testgobject.cpp
+    gui/additemdialog.cpp \
+    gui/mainwindow.cpp \
+    model/gpointlistmodel.cpp \
+    controller/applicationcontroller.cpp \
+    model/gobjectlistmodel.cpp \
+    model/gwindow.cpp \
+    model/gviewport.cpp
 
-HEADERS  += mainwindow.h \
-    mainwindowcontroller.h \
-    additemdialog.h \
+
+HEADERS  += \
     model/gobject.h \
-    model/line.h \
     model/gpoint.h \
-    test/model/testgpoint.h \
-    test/model/testgobject.h
+    gui/additemdialog.h \
+    gui/mainwindow.h \
+    test/model/test_gobject.h \
+    test/model/test_gpoint.h \
+    model/gpointlistmodel.h \
+    test/model/test_gpointlistmodel.h \
+    controller/applicationcontroller.h \
+    model/gobjectlistmodel.h \
+    model/gwindow.h \
+    model/gviewport.h
 
 FORMS    += mainwindow.ui \
     additemdialog.ui

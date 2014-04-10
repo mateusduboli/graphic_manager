@@ -1,30 +1,53 @@
 ﻿#include "gpoint.h"
 
 GPoint::GPoint():
-    x(0.0), y(0.0) {}
+    _x(0.0),
+    _y(0.0) {}
 
 GPoint::GPoint(const GPoint& copy):
-    x(copy.x), y(copy.y) {}
+    _x(copy.x()),
+    _y(copy.y()) {}
 
 GPoint::GPoint(const double x, const double y):
-    x(x), y(y) {}
+    _x(x),
+    _y(y) {}
 
-double GPoint::getX() const
+double GPoint::x() const
 {
-    return x;
+    return this->_x;
 }
 
-double GPoint::getY() const
+double GPoint::y() const
 {
-    return y;
+    return this->_y;
 }
 
 const double *GPoint::matrix() const {
-    const double *array = new double[2] {x, y};
+    const double *array = new double[2] {this->_x, this->_y};
     return array;
 }
 
 const QPointF GPoint::toQPointF() const {
-    return QPointF(x, y);
+    return QPointF(this->_x, this->_y);
 }
 
+const QString GPoint::toString() const
+{
+    return QString("{ X: %1, Y: %2 }").arg(this->_x, 0, 'g', 2).arg(this->_y, 0, 'g', 2);
+}
+
+const GPoint GPoint::operator+(const GPoint &other)
+{
+    return GPoint(_x + other.x(), _y + other.y());
+}
+
+GPoint GPoint::transform(std::function<GPoint (const GPoint)> transformation)
+{
+    return transformation(*this);
+}
+
+
+QDebug operator<<(QDebug b, const GPoint &point)
+{
+    return b << point.toString();
+}

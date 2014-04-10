@@ -1,5 +1,5 @@
-﻿#include "test/model/testgpoint.h"
-
+﻿#include "test/model/test_gpoint.h"
+/*
 TestGPoint::TestGPoint(QObject *parent) :
     QObject(parent)
 {
@@ -40,3 +40,4 @@ void TestGPoint::testToQPointF()
     QPointF reference(x, y);
     QCOMPARE(point.toQPointF(), reference);
 }
+*/

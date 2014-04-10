@@ -1,14 +1,15 @@
 ﻿#include <QApplication>
 #include <QTest>
 
-#include "mainwindow.h"
-#include "test/model/testgpoint.h"
-#include "test/model/testgobject.h"
+#include "gui/mainwindow.h"
+#include "test/model/test_gpoint.h"
+#include "test/model/test_gobject.h"
+#include "test/model/test_gpointlistmodel.h"
 
 int program(int argc, char* argv[])
 {
     QApplication a(argc, argv);
-    MainWindowController *controller = new MainWindowController;
+    ApplicationController *controller = new ApplicationController;
     MainWindow w(controller);
     w.show();
     return a.exec();
@@ -17,11 +18,15 @@ int program(int argc, char* argv[])
 int tests(int argc, char* argv[])
 {
     int status = 0;
+
     TestGPoint testGPoint;
     status |= QTest::qExec(&testGPoint, argc, argv);
 
     TestGObject testGObject;
     status |= QTest::qExec(&testGObject, argc, argv);
+
+    TestGPointListModel testGPointListModel;
+    status |= QTest::qExec(&testGPointListModel, argc, argv);
 
     return status;
 }

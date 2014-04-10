@@ -1,7 +1,12 @@
 ﻿#ifndef GPOINT_H
 #define GPOINT_H
 
+#include <functional>
+
 #include <QPointF>
+#include <QString>
+#include <QMetaType>
+#include <QDebug>
 
 class GPoint
 {
@@ -9,13 +14,19 @@ public:
     GPoint();
     GPoint(const GPoint &copy);
     GPoint(const double x, const double y);
-    double getX() const;
-    double getY() const;
+    double x() const;
+    double y() const;
     const double *matrix() const;
     const QPointF toQPointF() const;
+    const QString toString() const;
+    const GPoint operator+(const GPoint &point);
+    GPoint transform(std::function<GPoint (const GPoint)> transformation);
+    friend QDebug operator<<(QDebug b, const GPoint &point);
 private:
-    double x;
-    double y;
+    double _x;
+    double _y;
 };
+
+Q_DECLARE_METATYPE(GPoint)
 
 #endif // GPOINT_H
