@@ -19,7 +19,8 @@ public:
     const double *matrix() const;
     const QPointF toQPointF() const;
     const QString toString() const;
-    const GPoint operator+(const GPoint &point);
+    GPoint operator+(const GPoint &other) const;
+    bool operator==(const GPoint &other) const;
     GPoint transform(std::function<GPoint (const GPoint)> transformation);
     friend QDebug operator<<(QDebug b, const GPoint &point);
 private:

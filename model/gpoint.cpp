@@ -36,9 +36,14 @@ const QString GPoint::toString() const
     return QString("{ X: %1, Y: %2 }").arg(this->_x, 0, 'g', 2).arg(this->_y, 0, 'g', 2);
 }
 
-const GPoint GPoint::operator+(const GPoint &other)
+GPoint GPoint::operator+(const GPoint &other) const
 {
     return GPoint(_x + other.x(), _y + other.y());
+}
+
+bool GPoint::operator==(const GPoint &other) const
+{
+    return this->_x == other.x() && this->_y == other.y();
 }
 
 GPoint GPoint::transform(std::function<GPoint (const GPoint)> transformation)

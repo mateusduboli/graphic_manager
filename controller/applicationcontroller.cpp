@@ -3,8 +3,7 @@
 ApplicationController::ApplicationController(QObject *parent):
     QObject(parent)
 {
-    qDebug() << tr("constructor");
-
+    qDebug() << "constructor";
     connect(&this->displayFile, &GObjectListModel::rowsInserted, this, &ApplicationController::refreshScene);
     connect(this, &ApplicationController::zoomChanged, this, &ApplicationController::refreshScene);
     connect(this, &ApplicationController::centerChanged, this, &ApplicationController::refreshScene);
@@ -14,8 +13,8 @@ void ApplicationController::setWindowSize(const GPoint &center, const QSize &siz
 {
     qDebug() << "setting window size to: " << size;
     this->window = new GWindow(center, size);
-    emit this->zoomChanged(this->window->zoomFactor());
-    emit this->centerChanged(this->window->center());
+    emit this->zoomChanged(QString::number(this->window->zoomFactor() * 100) + "%");
+    emit this->centerChanged(this->window->center().toString());
 }
 
 void ApplicationController::createPoint(const double x, const double y)
