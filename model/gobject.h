@@ -2,6 +2,7 @@
 #define GOBJECT_H
 
 #include <QGraphicsItem>
+#include <QPen>
 #include <functional>
 
 #include "model/gpoint.h"
@@ -13,8 +14,7 @@ public:
     GObject(const QString &name);
     GObject(const QString &name, const QVector<GPoint> &points);
     GObject transform(std::function<GPoint (const GPoint)> transformation);
-    QGraphicsPolygonItem * graphicsItem();
-    QGraphicsPolygonItem * graphicsItem(std::function<GPoint (const GPoint)> transformation);
+    QGraphicsItem * graphicsItem();
     const QString toString() const;
     const QString name() const;
 private:

@@ -20,7 +20,7 @@ private Q_SLOTS:
     void testGraphicsItemEmpty()
     {
         GObject gObject("Nada");
-        QGraphicsPolygonItem *item = gObject.graphicsItem();
+        QGraphicsItem *item = gObject.graphicsItem();
         QVERIFY(item != 0);
     }
 
@@ -28,11 +28,9 @@ private Q_SLOTS:
     {
         GObject gObject("Ponto");
         gObject.append(GPoint(0,0));
-        QGraphicsPolygonItem *item = gObject.graphicsItem();
+        QGraphicsItem *item = gObject.graphicsItem();
 
-        QPolygonF reference;
-        reference.append(QPointF(0,0));
-        QCOMPARE(item->polygon(), reference);
+        QVERIFY(item->contains(QPointF(0,0)));
     }
 
     void testGraphicsItemLine()
@@ -40,12 +38,10 @@ private Q_SLOTS:
         GObject gObject("Linha");
         gObject.append(GPoint(0,0));
         gObject.append(GPoint(1,1));
-        QGraphicsPolygonItem *item = gObject.graphicsItem();
+        QGraphicsItem *item = gObject.graphicsItem();
 
-        QPolygonF reference;
-        reference.append(QPointF(0,0));
-        reference.append(QPointF(1,1));
-        QCOMPARE(item->polygon(), reference);
+        QVERIFY(item->contains(QPointF(0,0)));
+        QVERIFY(item->contains(QPointF(1,1)));
     }
 
 };

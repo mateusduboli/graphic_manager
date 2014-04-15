@@ -9,8 +9,8 @@ GWindow::GWindow(const GPoint &center, const QSize &size):
     this->vpTransformation = [this] (QSizeF viewPortSize, GPoint point) -> GPoint {
         double x = ((point.x() - this->min().x())/(this->width())) * viewPortSize.width();
         qDebug() << "x = ((" << point.x() << "-" << this->min().x() << ")/(" << this->width() << "))*" << viewPortSize.width();
-        double y = ((1 - point.y() - this->min().y())/(this->height()))*viewPortSize.height();
-        qDebug() << "y = (( 1 -" << point.y() << "-" << this->min().y() << ")/(" << this->height() << "))*" << viewPortSize.height();
+        double y = (1 - (point.y() - this->min().y())/(this->height()))*viewPortSize.height();
+        qDebug() << "y =  (1 - (" << point.y() << "-" << this->min().y() << ")/(" << this->height() << "))*" << viewPortSize.height();
         return GPoint(x, y);
     };
 }

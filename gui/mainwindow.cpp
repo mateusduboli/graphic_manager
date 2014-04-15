@@ -11,11 +11,9 @@ MainWindow::MainWindow(ApplicationController *controller, QWidget *parent) :
 
     // Models
     ui->graphicsView->setScene(&this->controller->scene);
-    QGraphicsView *view = ui->graphicsView;
-    this->controller->scene.setSceneRect(0,0, view->width(), view->height());
     ui->listView->setModel(&this->controller->displayFile);
 
-    // Connections
+    // Button Connections
     connect(ui->addGraphicalObjectButton, &QPushButton::clicked, this->dialog, &AddItemDialog::open);
 
     //Zoom connections
@@ -35,6 +33,7 @@ MainWindow::MainWindow(ApplicationController *controller, QWidget *parent) :
 
     // Lazy objects
     this->controller->setWindowSize(GPoint(0,0), QSize(100, 100));
+    this->controller->scene.setSceneRect(QRectF(QPointF(0,0), ui->graphicsView->size()));
 }
 
 MainWindow::~MainWindow()

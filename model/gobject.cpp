@@ -26,8 +26,17 @@ GObject GObject::transform(std::function<GPoint (const GPoint)> transformation)
     return newObject;
 }
 
-QGraphicsPolygonItem *GObject::graphicsItem()
+QGraphicsItem *GObject::graphicsItem()
 {
+    // If size equals one, draw point
+    if (this->size() == 1)
+    {
+        GPoint point = this->at(0);
+        qreal x = point.x();
+        qreal y = point.y();
+        return new QGraphicsEllipseItem(x, y, 1, 1);
+    }
+
     QPolygonF polygon;
     for(int i = 0; i < this->size();i++)
     {

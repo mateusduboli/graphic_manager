@@ -45,9 +45,9 @@ void ApplicationController::refreshScene()
     for(GObject object : this->displayFile.objects)
     {
         GObject transformedObject = object.transform(vpTransformation);
-        QGraphicsPolygonItem *item = transformedObject.graphicsItem();
+        QGraphicsItem *item = transformedObject.graphicsItem();
         this->scene.addItem(item);
-        qDebug() << "Adding new object: " << item->polygon();
+        qDebug() << "Adding new object: " << item;
     }
     qDebug() << "the scene has: " << scene.items();
     qDebug() << "finished adding objects";
@@ -93,16 +93,16 @@ void ApplicationController::moveLeft()
 {
     qDebug() << "moving window";
     qDebug() << "old center: " << this->window->center();
-    this->window->moveCenter(GPoint(1,0));
+    this->window->moveCenter(GPoint(-1,0));
     qDebug() << "new center: " << this->window->center();
     emit this->centerChanged(this->window->center().toString());
 }
 
-void ApplicationController::moveUp()
+ void ApplicationController::moveUp()
 {
     qDebug() << "moving window";
     qDebug() << "old center: " << this->window->center();
-    this->window->moveCenter(GPoint(0,1));
+    this->window->moveCenter(GPoint(0,-1));
     qDebug() << "new center: " << this->window->center();
     emit this->centerChanged(this->window->center().toString());
 }
@@ -111,7 +111,7 @@ void ApplicationController::moveDown()
 {
     qDebug() << "moving window";
     qDebug() << "old center: " << this->window->center();
-    this->window->moveCenter(GPoint(0,-1));
+    this->window->moveCenter(GPoint(0,1));
     qDebug() << "new center: " << this->window->center();
     emit this->centerChanged(this->window->center().toString());
 
@@ -121,7 +121,7 @@ void ApplicationController::moveRight()
 {
     qDebug() << "moving window";
     qDebug() << "old center: " << this->window->center();
-    this->window->moveCenter(GPoint(-1,0));
+    this->window->moveCenter(GPoint(1,0));
     qDebug() << "new center: " << this->window->center();
     emit this->centerChanged(this->window->center().toString());
 }
