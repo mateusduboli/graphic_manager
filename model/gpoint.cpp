@@ -1,16 +1,16 @@
 ﻿#include "gpoint.h"
 
-GPoint::GPoint():
-    _x(0.0),
-    _y(0.0) {}
-
 GPoint::GPoint(const GPoint& copy):
     _x(copy.x()),
-    _y(copy.y()) {}
+    _y(copy.y()),
+    _z(copy.z())
+{}
 
-GPoint::GPoint(const double x, const double y):
+GPoint::GPoint(const double x, const double y, const double z):
     _x(x),
-    _y(y) {}
+    _y(y),
+    _z(z)
+{}
 
 double GPoint::x() const
 {
@@ -22,8 +22,13 @@ double GPoint::y() const
     return this->_y;
 }
 
+double GPoint::z() const
+{
+    return this->_z;
+}
+
 const double *GPoint::matrix() const {
-    const double *array = new double[2] {this->_x, this->_y};
+    const double *array = new double[3] {this->_x, this->_y, this->_z};
     return array;
 }
 
@@ -33,7 +38,7 @@ const QPointF GPoint::toQPointF() const {
 
 const QString GPoint::toString() const
 {
-    return QString("{ X: %1, Y: %2 }").arg(this->_x, 0, 'g', 2).arg(this->_y, 0, 'g', 2);
+    return QString("{ X: %1, Y: %2, Z: %3 }").arg(this->_x, 0, 'g', 2).arg(this->_y, 0, 'g', 2).arg(this->_z, 0, 'g', 2);
 }
 
 GPoint GPoint::operator+(const GPoint &other) const
@@ -43,7 +48,12 @@ GPoint GPoint::operator+(const GPoint &other) const
 
 bool GPoint::operator==(const GPoint &other) const
 {
-    return this->_x == other.x() && this->_y == other.y();
+    return this->_x == other.x() && this->_y == other.y() && this->_z == other.z();
+}
+
+bool GPoint::operator!=(const GPoint &other) const
+{
+    return !((*this) == other);
 }
 
 GPoint GPoint::transform(std::function<GPoint (const GPoint)> transformation)
@@ -51,6 +61,15 @@ GPoint GPoint::transform(std::function<GPoint (const GPoint)> transformation)
     return transformation(*this);
 }
 
+GPoint::operator QPointF()
+{
+    return this->toQPointF();
+}
+
+GPoint::operator QString()
+{
+    return this->toString();
+}
 
 QDebug operator<<(QDebug b, const GPoint &point)
 {

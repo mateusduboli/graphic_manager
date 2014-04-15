@@ -5,6 +5,7 @@
 #include <QTest>
 
 #include "model/gobject.h"
+#include "model/operationbuilder.h"
 
 class TestGObject : public QObject
 {
@@ -39,9 +40,18 @@ private Q_SLOTS:
         gObject.append(GPoint(0,0));
         gObject.append(GPoint(1,1));
         QGraphicsItem *item = gObject.graphicsItem();
-
         QVERIFY(item->contains(QPointF(0,0)));
         QVERIFY(item->contains(QPointF(1,1)));
+    }
+
+    void testTranslation()
+    {
+        GObject point;
+        point.append(GPoint(0,0));
+        OperationBuilder *builder = new OperationBuilder;
+        Operation operation = builder->translate(0, 1)->build();
+        GObject translated = point.transform(operation);
+        QVERIFY(translated.at(0) == GPoint(0, 1));
     }
 
 };

@@ -1,10 +1,5 @@
 ﻿#include "model/gobject.h"
 
-GObject::GObject():
-    _name("")
-{
-}
-
 GObject::GObject(const QString &name):
     _name(name)
 {
@@ -41,7 +36,7 @@ QGraphicsItem *GObject::graphicsItem()
     for(int i = 0; i < this->size();i++)
     {
         GPoint point = this->at(i);
-        QPointF qPoint = point.toQPointF();
+        QPointF qPoint = point;
         polygon.append(qPoint);
     }
     QGraphicsPolygonItem *gPolygon = new QGraphicsPolygonItem(polygon);

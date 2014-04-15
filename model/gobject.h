@@ -10,8 +10,7 @@
 class GObject : public QVector<GPoint>
 {
 public:
-    GObject();
-    GObject(const QString &name);
+    GObject(const QString &name = "");
     GObject(const QString &name, const QVector<GPoint> &points);
     GObject transform(std::function<GPoint (const GPoint)> transformation);
     QGraphicsItem * graphicsItem();

@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     controller/applicationcontroller.cpp \
     model/gobjectlistmodel.cpp \
     model/gwindow.cpp \
-    model/gviewport.cpp
+    model/gviewport.cpp \
+    model/operationbuilder.cpp
 
 
 HEADERS  += \
@@ -37,7 +38,8 @@ HEADERS  += \
     controller/applicationcontroller.h \
     model/gobjectlistmodel.h \
     model/gwindow.h \
-    model/gviewport.h
+    model/gviewport.h \
+    model/operationbuilder.h
 
 FORMS    += mainwindow.ui \
     additemdialog.ui
