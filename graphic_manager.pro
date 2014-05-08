@@ -18,12 +18,13 @@ SOURCES += main.cpp\
     model/gpoint.cpp \
     gui/additemdialog.cpp \
     gui/mainwindow.cpp \
-    model/gpointlistmodel.cpp \
     controller/applicationcontroller.cpp \
-    model/gobjectlistmodel.cpp \
     model/gwindow.cpp \
     model/gviewport.cpp \
-    model/operationbuilder.cpp
+    model/operationbuilder.cpp \
+    controller/gobjectlistmodel.cpp \
+    controller/gpointlistmodel.cpp \
+    model/matrixoperations.cpp
 
 
 HEADERS  += \
@@ -33,13 +34,17 @@ HEADERS  += \
     gui/mainwindow.h \
     test/model/test_gobject.h \
     test/model/test_gpoint.h \
-    model/gpointlistmodel.h \
-    test/model/test_gpointlistmodel.h \
     controller/applicationcontroller.h \
-    model/gobjectlistmodel.h \
     model/gwindow.h \
     model/gviewport.h \
-    model/operationbuilder.h
+    model/operationbuilder.h \
+    controller/gpointlistmodel.h \
+    controller/gobjectlistmodel.h \
+    test/controller/test_gpointlistmodel.h \
+    test/model/test_operationbuilder.h \
+    model/matrixoperations.h \
+    test/model/test_matrixoperations.h \
+    model/types.h
 
 FORMS    += mainwindow.ui \
     additemdialog.ui

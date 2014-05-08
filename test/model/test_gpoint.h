@@ -44,6 +44,17 @@ private Q_SLOTS:
         QCOMPARE(expected, actual);
     }
 
+    void testVectorConstructor()
+    {
+        double x = 2.0;
+        double y = -3.5;
+        double z = 4;
+        Vector vector {{x, y, z}};
+        const GPoint expected(x, y, z);
+        const GPoint actual(vector);
+        QCOMPARE(expected, actual);
+    }
+
     void testCompareSucess()
     {
         double x = 2.0;
@@ -68,12 +79,12 @@ private Q_SLOTS:
         QVERIFY(reference != diff_z);
     }
 
-    void testMatrix()
+    void testVector()
     {
         double x = -1.0;
         double y = 9.0;
         GPoint point(x, y);
-        const double * actual = point.matrix();
+        const Vector actual = point.vector();
         double reference[] = {x, y, 1};
         QCOMPARE(actual[0], reference[0]);
         QCOMPARE(actual[1], reference[1]);

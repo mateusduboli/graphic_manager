@@ -1,4 +1,4 @@
-﻿#include "model/gobjectlistmodel.h"
+﻿#include "gobjectlistmodel.h"
 
 GObjectListModel::GObjectListModel(QObject *parent) :
     QAbstractListModel(parent)

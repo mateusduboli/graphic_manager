@@ -5,9 +5,10 @@
 #include <QDebug>
 
 #include "model/gobject.h"
-#include "model/gpointlistmodel.h"
-#include "model/gobjectlistmodel.h"
 #include "model/gwindow.h"
+
+#include "gobjectlistmodel.h"
+#include "gpointlistmodel.h"
 
 #define ZOOM_STEP 0.05
 

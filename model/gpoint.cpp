@@ -12,6 +12,12 @@ GPoint::GPoint(const double x, const double y, const double z):
     _z(z)
 {}
 
+GPoint::GPoint(const Vector vector):
+    _x(vector[0]),
+    _y(vector[1]),
+    _z(vector[2])
+{}
+
 double GPoint::x() const
 {
     return this->_x;
@@ -27,9 +33,9 @@ double GPoint::z() const
     return this->_z;
 }
 
-const double *GPoint::matrix() const {
-    const double *array = new double[3] {this->_x, this->_y, this->_z};
-    return array;
+const Vector GPoint::vector() const {
+    const Vector vector {{this->_x, this->_y, this->_z}};
+    return vector;
 }
 
 const QPointF GPoint::toQPointF() const {

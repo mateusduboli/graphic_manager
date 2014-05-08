@@ -2,7 +2,7 @@
 #define GOBJECTLISTMODEL_H
 
 #include <QAbstractListModel>
-#include "gobject.h"
+#include "model/gobject.h"
 
 class GObjectListModel : public QAbstractListModel
 {

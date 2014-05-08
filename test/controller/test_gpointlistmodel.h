@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QTest>
-#include "model/gpointlistmodel.h"
+#include "controller/gpointlistmodel.h"
 
 class TestGPointListModel : public QObject
 {
@@ -12,8 +12,6 @@ public:
     explicit TestGPointListModel(QObject *parent = 0):
         QObject(parent)
     {}
-
-signals:
 
 private Q_SLOTS:
     void testRowCountWithEmptyModel()

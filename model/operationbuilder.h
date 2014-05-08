@@ -4,7 +4,8 @@
 #include <QVector>
 #include <functional>
 
-#include "gpoint.h"
+#include "model/matrixoperations.h"
+#include "model/gpoint.h"
 
 typedef std::function<GPoint (GPoint)> Operation;
 
@@ -12,11 +13,11 @@ class OperationBuilder
 {
 public:
     OperationBuilder();
-    OperationBuilder* translate(const double x, const double y);
+    OperationBuilder& translate(const double x, const double y);
     Operation build();
 private:
-    double* applyTransformation(const double* transformation);
-    double* transformationMatrix;
+    Matrix matrix;
+    std::function<GPoint (const Matrix, GPoint)> baseOperation;
 };
 
 #endif // OPERATIONBUIDLER_H

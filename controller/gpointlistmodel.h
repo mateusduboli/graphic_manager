@@ -5,8 +5,8 @@
 #include <QVector>
 #include <QDebug>
 
-#include "gpoint.h"
-#include "gobject.h"
+#include "model/gpoint.h"
+#include "model/gobject.h"
 
 class GPointListModel : public QAbstractListModel
 {

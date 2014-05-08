@@ -2,21 +2,25 @@
 #define GPOINT_H
 
 #include <functional>
+#include <array>
 
 #include <QPointF>
 #include <QString>
 #include <QMetaType>
 #include <QDebug>
 
+#include "types.h"
+
 class GPoint
 {
 public:
     GPoint(const GPoint &copy);
     GPoint(const double x = 0, const double y = 0, const double z = 1);
+    GPoint(const Vector vector);
     double x() const;
     double y() const;
     double z() const;
-    const double *matrix() const;
+    const Vector vector() const;
     const QPointF toQPointF() const;
     const QString toString() const;
     GPoint operator+(const GPoint &other) const;

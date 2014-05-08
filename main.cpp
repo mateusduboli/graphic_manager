@@ -4,7 +4,9 @@
 #include "gui/mainwindow.h"
 #include "test/model/test_gpoint.h"
 #include "test/model/test_gobject.h"
-#include "test/model/test_gpointlistmodel.h"
+#include "test/model/test_operationbuilder.h"
+#include "test/model/test_matrixoperations.h"
+#include "test/controller/test_gpointlistmodel.h"
 
 int program(int argc, char* argv[])
 {
@@ -27,6 +29,12 @@ int tests(int argc, char* argv[])
 
     TestGPointListModel testGPointListModel;
     status |= QTest::qExec(&testGPointListModel, argc, argv);
+
+    TestOperationBuilder testOperationBuilder;
+    status |= QTest::qExec(&testOperationBuilder, argc, argv);
+
+    TestMatrixOperations testMatrixOperations;
+    status |= QTest::qExec(&testMatrixOperations, argc, argv);
 
     return status;
 }

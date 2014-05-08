@@ -49,9 +49,9 @@ private Q_SLOTS:
         GObject point;
         point.append(GPoint(0,0));
         OperationBuilder *builder = new OperationBuilder;
-        Operation operation = builder->translate(0, 1)->build();
+        Operation operation = builder->translate(0, 1).build();
         GObject translated = point.transform(operation);
-        QVERIFY(translated.at(0) == GPoint(0, 1));
+        QCOMPARE(translated.at(0), GPoint(0, 1));
     }
 
 };
