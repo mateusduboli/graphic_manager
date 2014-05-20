@@ -24,7 +24,9 @@ SOURCES += main.cpp\
     model/operationbuilder.cpp \
     controller/gobjectlistmodel.cpp \
     controller/gpointlistmodel.cpp \
-    model/matrixoperations.cpp
+    model/matrixoperations.cpp \
+    gui/edititemdialog.cpp \
+    controller/operationlistmodel.cpp
 
 
 HEADERS  += \
@@ -44,7 +46,10 @@ HEADERS  += \
     test/model/test_operationbuilder.h \
     model/matrixoperations.h \
     test/model/test_matrixoperations.h \
-    model/types.h
+    model/types.h \
+    gui/edititemdialog.h \
+    controller/operationlistmodel.h
 
 FORMS    += mainwindow.ui \
-    additemdialog.ui
+    additemdialog.ui \
+    gui/edititemdialog.ui

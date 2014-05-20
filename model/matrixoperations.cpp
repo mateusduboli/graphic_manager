@@ -23,4 +23,34 @@ Vector mult(const Vector op1, const Matrix op2)
     }
     return result;
 }
+
+Matrix scalingMatrix(const double scalar)
+{
+    return Matrix {{
+            {{scalar, 0, 0}},
+            {{0, scalar, 0}},
+            {{0, 0, 1}}
+        }};
+}
+
+Matrix translationMatrix(const double x, const double y)
+{
+    return Matrix{{
+            {{1, 0, 0}},
+            {{0, 1, 0}},
+            {{x, y, 1}}
+        }};
+}
+
+Matrix rotatingMatrix(const double degrees)
+{
+    const double rad = (M_PI/180)*degrees;
+    return Matrix{{
+            {{cos(rad), -sin(rad), 0}},
+            {{sin(rad), cos(rad), 0}},
+            {{0, 0, 1}}
+        }};
+}
+
+
 }

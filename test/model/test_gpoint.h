@@ -118,6 +118,7 @@ private Q_SLOTS:
         QString actual = point;
         QCOMPARE(actual, expected);
     }
+
 };
 
 #endif // TESTGPOINT_H

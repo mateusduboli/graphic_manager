@@ -6,18 +6,21 @@
 
 #include "model/matrixoperations.h"
 #include "model/gpoint.h"
+#include "model/types.h"
 
-typedef std::function<GPoint (GPoint)> Operation;
+using namespace MatrixOperations;
 
 class OperationBuilder
 {
 public:
     OperationBuilder();
     OperationBuilder& translate(const double x, const double y);
-    Operation build();
+    OperationBuilder& scale(const double scalar);
+    OperationBuilder& rotate(const double degrees);
+    Operation build(const GPoint reference = GPoint(0,0));
 private:
     Matrix matrix;
-    std::function<GPoint (const Matrix, GPoint)> baseOperation;
+    std::function<GPoint (const Matrix, const GPoint)> baseOperation;
 };
 
 #endif // OPERATIONBUIDLER_H

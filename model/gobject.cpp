@@ -11,17 +11,32 @@ GObject::GObject(const QString &name, const QVector<GPoint> &points):
 {
 }
 
-GObject GObject::transform(std::function<GPoint (const GPoint)> transformation)
+GObject GObject::transform(Operation transformation)
 {
     GObject newObject(_name);
     for(int i = 0; i < this->size();i++)
     {
-        newObject.append(transformation(this->data()[i]));
+        newObject.append(transformation(this->at(i)));
     }
     return newObject;
 }
 
-QGraphicsItem *GObject::graphicsItem()
+const GPoint GObject::center()
+{
+    double centerX = 0;
+    double centerY = 0;
+    for(GPoint point : *this){
+        centerX += point.x();
+        centerY += point.y();
+    }
+    if(this->size() > 0) {
+        centerX /= this->size();
+        centerY /= this->size();
+    }
+    return GPoint(centerX, centerY);
+}
+
+QGraphicsItem *GObject::toGraphicsItem()
 {
     // If size equals one, draw point
     if (this->size() == 1)
@@ -45,7 +60,14 @@ QGraphicsItem *GObject::graphicsItem()
 
 const QString GObject::toString() const
 {
-    return this->_name;
+    QString result = this->_name;
+    result.append(" : [");
+    for(GPoint point : *this) {
+        result.append(point.toString());
+        result.append(", ");
+    }
+    result.append("]");
+    return result;
 }
 
 const QString GObject::name() const

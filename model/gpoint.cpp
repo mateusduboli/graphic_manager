@@ -44,7 +44,10 @@ const QPointF GPoint::toQPointF() const {
 
 const QString GPoint::toString() const
 {
-    return QString("{ X: %1, Y: %2, Z: %3 }").arg(this->_x, 0, 'g', 2).arg(this->_y, 0, 'g', 2).arg(this->_z, 0, 'g', 2);
+    return QString("{ X: %1, Y: %2, Z: %3 }")
+            .arg(this->_x, 0, 'g', 20)
+            .arg(this->_y, 0, 'g', 20)
+            .arg(this->_z, 0, 'g', 20);
 }
 
 GPoint GPoint::operator+(const GPoint &other) const
@@ -54,17 +57,15 @@ GPoint GPoint::operator+(const GPoint &other) const
 
 bool GPoint::operator==(const GPoint &other) const
 {
-    return this->_x == other.x() && this->_y == other.y() && this->_z == other.z();
+    const double eps = 1e-6;
+    return  abs(this->_x - other.x()) < eps &&
+            abs(this->_y - other.y()) < eps &&
+            abs(this->_z - other.z()) < eps;
 }
 
 bool GPoint::operator!=(const GPoint &other) const
 {
     return !((*this) == other);
-}
-
-GPoint GPoint::transform(std::function<GPoint (const GPoint)> transformation)
-{
-    return transformation(*this);
 }
 
 GPoint::operator QPointF()

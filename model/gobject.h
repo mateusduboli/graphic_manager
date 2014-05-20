@@ -6,14 +6,16 @@
 #include <functional>
 
 #include "model/gpoint.h"
+#include "model/types.h"
 
 class GObject : public QVector<GPoint>
 {
 public:
     GObject(const QString &name = "");
     GObject(const QString &name, const QVector<GPoint> &points);
-    GObject transform(std::function<GPoint (const GPoint)> transformation);
-    QGraphicsItem * graphicsItem();
+    GObject transform(Operation transformation);
+    const GPoint center();
+    QGraphicsItem * toGraphicsItem();
     const QString toString() const;
     const QString name() const;
 private:

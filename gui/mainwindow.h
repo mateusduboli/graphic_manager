@@ -5,6 +5,7 @@
 
 #include "controller/applicationcontroller.h"
 #include "gui/additemdialog.h"
+#include "gui/edititemdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,7 +22,8 @@ public:
 private:
     Ui::MainWindow *ui;
     ApplicationController *controller;
-    AddItemDialog *dialog;
+    AddItemDialog *addItem;
+    EditItemDialog *editItem;
     QPushButton *addItemButton;
 };
 

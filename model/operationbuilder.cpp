@@ -2,30 +2,37 @@
 
 OperationBuilder::OperationBuilder()
 {
-    this->matrix = Matrix{{
-                   {{1, 0, 0}},
-                   {{0, 1, 0}},
-                   {{0, 0, 1}}
-                  }};
+    this->matrix = Matrix(IDENTITY);
+
     this->baseOperation = [&](Matrix matrix, GPoint point) -> GPoint {
-        Vector pointVector = MatrixOperations::mult(point.vector(), matrix);
-        GPoint newPoint(pointVector);
-        return newPoint;
+        Vector vector = mult(point.vector(), matrix);
+        return GPoint(vector);
     };
 }
 
 OperationBuilder &OperationBuilder::translate(const double x, const double y)
 {
-    const Matrix translationMatrix = {{
-        {{1, 0, 0}},
-        {{0, 1, 0}},
-        {{x, y, 1}}
-    }};
-    this->matrix = MatrixOperations::mult(this->matrix, translationMatrix);
+    this->matrix = mult(this->matrix, translationMatrix(x, y));
     return *this;
 }
 
-Operation OperationBuilder::build()
+OperationBuilder &OperationBuilder::scale(const double scalar)
 {
+    this->matrix = mult(this->matrix, scalingMatrix(scalar));
+    return *this;
+}
+
+OperationBuilder &OperationBuilder::rotate(const double degrees)
+{
+    this->matrix = mult(this->matrix, rotatingMatrix(degrees));
+    return *this;
+}
+
+Operation OperationBuilder::build(const GPoint reference)
+{
+    double x = reference.x();
+    double y = reference.y();
+    this->matrix = mult(translationMatrix(-x, -y), this->matrix);
+    this->matrix = mult(this->matrix, translationMatrix(x, y));
     return std::bind1st(this->baseOperation, this->matrix);
 }

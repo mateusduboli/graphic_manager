@@ -3,13 +3,14 @@
 
 #include <functional>
 #include <array>
+#include <cmath>
 
 #include <QPointF>
 #include <QString>
 #include <QMetaType>
 #include <QDebug>
 
-#include "types.h"
+#include "model/types.h"
 
 class GPoint
 {
@@ -26,7 +27,6 @@ public:
     GPoint operator+(const GPoint &other) const;
     bool operator==(const GPoint &other) const;
     bool operator!=(const GPoint &other) const;
-    GPoint transform(std::function<GPoint (const GPoint)> transformation);
     operator QString();
     operator QPointF();
     friend QDebug operator<<(QDebug b, const GPoint &point);
