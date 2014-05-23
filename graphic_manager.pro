@@ -50,6 +50,6 @@ HEADERS  += \
     gui/edititemdialog.h \
     controller/operationlistmodel.h
 
-FORMS    += mainwindow.ui \
-    additemdialog.ui \
+FORMS    += gui/mainwindow.ui \
+    gui/additemdialog.ui \
     gui/edititemdialog.ui
