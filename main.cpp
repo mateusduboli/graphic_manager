@@ -13,6 +13,7 @@ int program(int argc, char* argv[])
     QApplication a(argc, argv);
     ApplicationController *controller = new ApplicationController;
     MainWindow w(controller);
+    controller->sampleObjects();
     w.show();
     return a.exec();
 }

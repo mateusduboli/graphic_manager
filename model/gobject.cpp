@@ -14,9 +14,9 @@ GObject::GObject(const QString &name, const QVector<GPoint> &points):
 GObject GObject::transform(Operation transformation)
 {
     GObject newObject(_name);
-    for(int i = 0; i < this->size();i++)
+    for(GPoint point : *this)
     {
-        newObject.append(transformation(this->at(i)));
+        newObject.append(transformation(point));
     }
     return newObject;
 }
@@ -68,6 +68,16 @@ const QString GObject::toString() const
     }
     result.append("]");
     return result;
+}
+
+const QPolygon GObject::toQPolygon() const
+{
+    QPolygon polygon;
+    for(GPoint point : *this)
+    {
+        polygon.append(point.toQPoint());
+    }
+    return polygon;
 }
 
 const QString GObject::name() const

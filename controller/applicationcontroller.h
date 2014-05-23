@@ -6,6 +6,7 @@
 
 #include "model/gobject.h"
 #include "model/gwindow.h"
+#include "model/gviewport.h"
 
 #include "controller/gobjectlistmodel.h"
 #include "controller/gpointlistmodel.h"
@@ -18,12 +19,12 @@ class ApplicationController : public QObject
     Q_OBJECT
 public:
     explicit ApplicationController(QObject *parent = 0);
-    QGraphicsScene scene;
+    GWindow window;
     GObject *selected; //TODO Move selected to EditItemDialog
     GObjectListModel displayFile;
     GPointListModel gPointList;
     OperationListModel operationList;
-    void setWindowSize(const GPoint &center, const QSize &size);
+    void sampleObjects();
     void createPoint(const double x, const double y);
     void editObject(const QModelIndex &index);
     void buildObject(const QString &name);
@@ -32,7 +33,7 @@ public:
     void createOperationRotate(const double degrees);
     void createOperationTranslate(const double x, const double y);
 public slots:
-    void refreshScene();
+    void refreshWindow();
     void resetZoom();
     void lessZoom();
     void moreZoom();
@@ -46,8 +47,6 @@ signals:
     void centerChanged(const QString &centerStringValue);
     void selectedObjectChanged(const QString &name);
     void operationBuildt(const GObject* object);
-private:
-    GWindow *window;
 };
 
 #endif // APPLICATIONCONTROLLER_H

@@ -12,7 +12,7 @@ MainWindow::MainWindow(ApplicationController *controller, QWidget *parent) :
     ui->setupUi(this);
 
     qDebug() << "[MainWindow] setting models";
-    ui->graphicsView->setScene(&this->controller->scene);
+    ui->viewport->setWindow(&this->controller->window);
     ui->listView->setModel(&this->controller->displayFile);
 
     // Button Connections
@@ -36,11 +36,6 @@ MainWindow::MainWindow(ApplicationController *controller, QWidget *parent) :
     // Edit connections
     connect(ui->listView, &QListView::doubleClicked, this->editItem, &EditItemDialog::openAtIndex);
 
-    qDebug() << "[MainWindow] finished connections";
-
-    qDebug() << "[MainWindow] window initialization";
-    this->controller->setWindowSize(GPoint(0,0), QSize(100, 100));
-    this->controller->scene.setSceneRect(QRectF(QPointF(0,0), ui->graphicsView->size()));
     qDebug() << "[MainWindow] finished constructor";
 }
 

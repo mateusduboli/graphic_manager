@@ -6,19 +6,38 @@ ApplicationController::ApplicationController(QObject *parent):
     qDebug() << "[ApplicationController] constructor";
 
     qDebug() << "[ApplicationController] connecting";
-    connect(&this->displayFile, &GObjectListModel::rowsInserted, this, &ApplicationController::refreshScene);
-    connect(this, &ApplicationController::zoomChanged, this, &ApplicationController::refreshScene);
-    connect(this, &ApplicationController::centerChanged, this, &ApplicationController::refreshScene);
-    connect(this, &ApplicationController::operationBuildt, this, &ApplicationController::refreshScene);
+    connect(&this->displayFile, &GObjectListModel::rowsInserted, this, &ApplicationController::refreshWindow);
+    connect(this, &ApplicationController::operationBuildt, this, &ApplicationController::refreshWindow);
+
     qDebug() << "[ApplicationController] finished constructor";
 }
 
-void ApplicationController::setWindowSize(const GPoint &center, const QSize &size)
+void ApplicationController::sampleObjects()
 {
-    qDebug() << "[ApplicationController] setting window size to: " << size;
-    this->window = new GWindow(center, size);
-    emit this->zoomChanged(QString::number(this->window->zoomFactor() * 100) + "%");
-    emit this->centerChanged(this->window->center().toString());
+    qDebug() << "[ApplicationController] creating sample objects";
+    this->displayFile.append(GObject("X axis", {{
+                                                    GPoint(0,-200),
+                                                    GPoint(0,200)
+                                                }}));
+    this->displayFile.append(GObject("Y axis", {{
+                                                    GPoint(-200,0),
+                                                    GPoint(200,0)
+                                                }}));
+    this->displayFile.append(GObject("Sample square", {{
+                                                           GPoint(0,0),
+                                                           GPoint(10,0),
+                                                           GPoint(10,10),
+                                                           GPoint(0,10)
+                                                       }}));
+    emit this->refreshWindow();
+}
+
+void ApplicationController::refreshWindow()
+{
+    qDebug() << "[ApplicationController] refreshing window ";
+    this->window.updateFramebuffer(&this->displayFile.objects);
+    emit this->zoomChanged(QString::number(this->window.zoomFactor() * 100) + "%");
+    emit this->centerChanged(this->window.center().toString());
 }
 
 void ApplicationController::createOperationScale(const double factor)
@@ -72,94 +91,75 @@ void ApplicationController::buildOperation()
     emit operationBuildt(this->selected);
 }
 
-void ApplicationController::refreshScene()
-{
-    qDebug() << "[ApplicationController] refreshing scene";
-    this->scene.clear();
-    qDebug() << "[ApplicationController] clearing scene";
-    QSizeF vpSize = this->scene.sceneRect().size();
-    auto vpTransformation = this->window->viewPortTransformation(vpSize);
-    for(GObject object : this->displayFile.objects)
-    {
-        GObject transformedObject = object.transform(vpTransformation);
-        QGraphicsItem *item = transformedObject.toGraphicsItem();
-        this->scene.addItem(item);
-        qDebug() << "[ApplicationController] Adding new object: " << item;
-    }
-    qDebug() << "[ApplicationController] the scene has: " << scene.items();
-    qDebug() << "[ApplicationController] finished adding objects";
-}
-
 void ApplicationController::resetZoom()
 {
     qDebug() << "[ApplicationController] reseting zoom";
-    qDebug() << "[ApplicationController] old zoom factor: " << this->window->zoomFactor();
-    this->window->clearZoomFactor();
-    qDebug() << "[ApplicationController] new zoom factor: " << this->window->zoomFactor();
-    emit this->zoomChanged(QString::number(this->window->zoomFactor() * 100) + "%");
+    qDebug() << "[ApplicationController] old zoom factor: " << this->window.zoomFactor();
+    this->window.clearZoomFactor();
+    qDebug() << "[ApplicationController] new zoom factor: " << this->window.zoomFactor();
+    this->refreshWindow();
 }
 
 void ApplicationController::lessZoom()
 {
     qDebug() << "[ApplicationController] subtracting zoom";
-    qDebug() << "[ApplicationController] old zoom factor: " << QString::number(this->window->zoomFactor());
-    this->window->addZoomFactor(ZOOM_STEP);
-    qDebug() << "[ApplicationController] new zoom factor: " << QString::number(this->window->zoomFactor());
-    emit this->zoomChanged(QString::number(this->window->zoomFactor() * 100) + "%");
+    qDebug() << "[ApplicationController] old zoom factor: " << QString::number(this->window.zoomFactor());
+    this->window.addZoomFactor(ZOOM_STEP);
+    qDebug() << "[ApplicationController] new zoom factor: " << QString::number(this->window.zoomFactor());
+    this->refreshWindow();
 }
 
 void ApplicationController::moreZoom()
 {
     qDebug() << "[ApplicationController] adding zoom";
-    qDebug() << "[ApplicationController] old zoom factor: " << QString::number(this->window->zoomFactor());
-    this->window->subZoomFactor(ZOOM_STEP);
-    qDebug() << "[ApplicationController] new zoom factor: " << QString::number(this->window->zoomFactor());
-    emit this->zoomChanged(QString::number(this->window->zoomFactor() * 100) + "%");
+    qDebug() << "[ApplicationController] old zoom factor: " << QString::number(this->window.zoomFactor());
+    this->window.addZoomFactor(-ZOOM_STEP);
+    qDebug() << "[ApplicationController] new zoom factor: " << QString::number(this->window.zoomFactor());
+    this->refreshWindow();
 }
 
 void ApplicationController::centerPosition()
 {
     qDebug() << "[ApplicationController] centering window";
-    qDebug() << "[ApplicationController] old center: " << this->window->center();
-    this->window->clearCenter();
-    qDebug() << "[ApplicationController] new center: " << this->window->center();
-    emit this->centerChanged(this->window->center().toString());
+    qDebug() << "[ApplicationController] old center: " << this->window.center();
+    this->window.clearCenter();
+    qDebug() << "[ApplicationController] new center: " << this->window.center();
+    this->refreshWindow();
 }
 
 void ApplicationController::moveLeft()
 {
     qDebug() << "[ApplicationController] moving window";
-    qDebug() << "[ApplicationController] old center: " << this->window->center();
-    this->window->moveCenter(GPoint(-1,0));
-    qDebug() << "[ApplicationController] new center: " << this->window->center();
-    emit this->centerChanged(this->window->center().toString());
+    qDebug() << "[ApplicationController] old center: " << this->window.center();
+    this->window.moveCenter(GPoint(-1,0));
+    qDebug() << "[ApplicationController] new center: " << this->window.center();
+    this->refreshWindow();
 }
 
  void ApplicationController::moveUp()
 {
     qDebug() << "[ApplicationController] moving window";
-    qDebug() << "[ApplicationController] old center: " << this->window->center();
-    this->window->moveCenter(GPoint(0,-1));
-    qDebug() << "[ApplicationController] new center: " << this->window->center();
-    emit this->centerChanged(this->window->center().toString());
+    qDebug() << "[ApplicationController] old center: " << this->window.center();
+    this->window.moveCenter(GPoint(0,-1));
+    qDebug() << "[ApplicationController] new center: " << this->window.center();
+    this->refreshWindow();
 }
 
 void ApplicationController::moveDown()
 {
     qDebug() << "[ApplicationController] moving window";
-    qDebug() << "[ApplicationController] old center: " << this->window->center();
-    this->window->moveCenter(GPoint(0,1));
-    qDebug() << "[ApplicationController] new center: " << this->window->center();
-    emit this->centerChanged(this->window->center().toString());
-
+    qDebug() << "[ApplicationController] old center: " << this->window.center();
+    this->window.moveCenter(GPoint(0,1));
+    qDebug() << "[ApplicationController] new center: " << this->window.center();
+    this->refreshWindow();
 }
 
 void ApplicationController::moveRight()
 {
     qDebug() << "[ApplicationController] moving window";
-    qDebug() << "[ApplicationController] old center: " << this->window->center();
-    this->window->moveCenter(GPoint(1,0));
-    qDebug() << "[ApplicationController] new center: " << this->window->center();
-    emit this->centerChanged(this->window->center().toString());
+    qDebug() << "[ApplicationController] old center: " << this->window.center();
+    this->window.moveCenter(GPoint(1,0));
+    qDebug() << "[ApplicationController] new center: " << this->window.center();
+    this->refreshWindow();
 }
 

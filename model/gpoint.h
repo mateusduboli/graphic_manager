@@ -23,6 +23,7 @@ public:
     double z() const;
     const Vector vector() const;
     const QPointF toQPointF() const;
+    const QPoint toQPoint() const;
     const QString toString() const;
     GPoint operator+(const GPoint &other) const;
     bool operator==(const GPoint &other) const;

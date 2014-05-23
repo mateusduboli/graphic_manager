@@ -3,6 +3,7 @@
 
 #include <QGraphicsItem>
 #include <QPen>
+#include <QPolygon>
 #include <functional>
 
 #include "model/gpoint.h"
@@ -17,6 +18,7 @@ public:
     const GPoint center();
     QGraphicsItem * toGraphicsItem();
     const QString toString() const;
+    const QPolygon toQPolygon() const;
     const QString name() const;
 private:
     QString _name;

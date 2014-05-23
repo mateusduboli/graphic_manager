@@ -42,6 +42,11 @@ const QPointF GPoint::toQPointF() const {
     return QPointF(this->_x, this->_y);
 }
 
+const QPoint GPoint::toQPoint() const
+{
+    return QPoint(this->_x, this->_y);
+}
+
 const QString GPoint::toString() const
 {
     return QString("{ X: %1, Y: %2, Z: %3 }")

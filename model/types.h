@@ -5,6 +5,9 @@
 #include <functional>
 
 class GPoint;
+class GWindow;
+class GObject;
+class GViewport;
 using Operation = std::function<GPoint (const GPoint)>;
 using Vector = std::array<double, 3>;
 using Matrix = std::array<std::array<double, 3>, 3>;

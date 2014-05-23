@@ -20,8 +20,8 @@
    <string>CG</string>
   </property>
   <widget class="QWidget" name="mainWindowWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" rowspan="2">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,1" columnstretch="1,1,0">
+    <item row="0" column="0" rowspan="3">
      <widget class="QGroupBox" name="menuGroupBox">
       <property name="title">
        <string>Menu</string>
@@ -136,14 +136,26 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="2" column="1" colspan="2">
+     <widget class="QGroupBox" name="consoleGroupBox">
+      <property name="title">
+       <string>Console</string>
+      </property>
+      <layout class="QVBoxLayout" name="consoleLayout">
+       <item>
+        <widget class="QTextBrowser" name="consoleTextBrowser"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="1" rowspan="2" colspan="2">
      <widget class="QGroupBox" name="canvasGroupBox">
       <property name="title">
        <string>Canvas</string>
       </property>
       <layout class="QVBoxLayout" name="canvasLayout">
        <item>
-        <widget class="QGraphicsView" name="graphicsView">
+        <widget class="GViewport" name="viewport" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -156,31 +168,22 @@
            <height>500</height>
           </size>
          </property>
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>500</height>
+          </size>
          </property>
-         <property name="horizontalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
+         <property name="baseSize">
+          <size>
+           <width>500</width>
+           <height>500</height>
+          </size>
          </property>
-         <property name="sizeAdjustPolicy">
-          <enum>QAbstractScrollArea::AdjustIgnored</enum>
-         </property>
-         <property name="interactive">
-          <bool>false</bool>
+         <property name="autoFillBackground">
+          <bool>true</bool>
          </property>
         </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QGroupBox" name="consoleGroupBox">
-      <property name="title">
-       <string>Console</string>
-      </property>
-      <layout class="QVBoxLayout" name="consoleLayout">
-       <item>
-        <widget class="QTextBrowser" name="consoleTextBrowser"/>
        </item>
       </layout>
      </widget>
@@ -208,6 +211,14 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GViewport</class>
+   <extends>QWidget</extends>
+   <header>model/gviewport.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

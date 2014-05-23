@@ -16,7 +16,7 @@ int GObjectListModel::rowCount(const QModelIndex &parent) const
 QVariant GObjectListModel::data(const QModelIndex &index, int role) const
 {
     if(role == Qt::DisplayRole)
-        return QVariant(this->objects.at(index.row()).toString());
+        return QVariant(this->objects.at(index.row()).name());
     else
         return QVariant();
 }
