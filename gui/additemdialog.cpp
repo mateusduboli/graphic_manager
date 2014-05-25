@@ -1,4 +1,4 @@
-﻿#include "additemdialog.h"
+﻿#include "gui/additemdialog.h"
 #include "ui_additemdialog.h"
 
 AddItemDialog::AddItemDialog(ApplicationController * controller, QWidget *parent) :

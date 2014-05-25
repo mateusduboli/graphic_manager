@@ -18,7 +18,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(ApplicationController *controller, QWidget *parent = 0);
     ~MainWindow();
-
+public slots:
+    void onRotateClockButtonClicked();
+    void onRotateCounterclockButtonClicked();
 private:
     Ui::MainWindow *ui;
     ApplicationController *controller;

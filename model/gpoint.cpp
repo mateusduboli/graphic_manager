@@ -60,6 +60,11 @@ GPoint GPoint::operator+(const GPoint &other) const
     return GPoint(_x + other.x(), _y + other.y());
 }
 
+GPoint GPoint::operator-() const
+{
+    return GPoint(-this->_x, -this->_y);
+}
+
 bool GPoint::operator==(const GPoint &other) const
 {
     const double eps = 1e-6;

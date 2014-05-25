@@ -5,12 +5,20 @@ GWindow::GWindow(QObject* parent, const GPoint &center, const QSizeF &size):
     _height(size.height()),
     _width(size.width()),
     _zoomFactor(1),
+    _angle(0),
     _center(center)
 {
     this->vpTransformation = [this] (QSize viewPortSize, GPoint point) -> GPoint {
         double x = ((point.x() - this->min().x())/(this->width())) * viewPortSize.width();
         double y = (1 - (point.y() - this->min().y())/(this->height()))*viewPortSize.height();
         return GPoint(x, y);
+    };
+    this->ppcTransformation = [&] (const double angle, GPoint windowCenter, GPoint point) -> GPoint {
+        OperationBuilder builder;
+        builder.translate(-windowCenter);
+        builder.rotate(angle);
+        Operation op = builder.build();
+        return op(point);
     };
 }
 
@@ -46,9 +54,10 @@ const GPoint GWindow::center() const
 void GWindow::updateFramebuffer(QVector<GObject> *displayFile)
 {
     this->_framebuffer.clear();
+    auto op = std::bind1st(this->ppcTransformation, 0);
     for(GObject object : *displayFile)
     {
-        this->_framebuffer.append(object);
+        this->_framebuffer.append(object.transform(op));
     }
     emit this->framebufferChanged();
 }
@@ -61,6 +70,11 @@ void GWindow::clearZoomFactor()
 void GWindow::clearCenter()
 {
     this->_center = GPoint(0,0);
+}
+
+void GWindow::rotate(const double degrees)
+{
+    this->_angle += degrees;
 }
 
 void GWindow::moveCenter(const GPoint &movement)

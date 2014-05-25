@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>resources/rotateLeft.png</file>
+        <file>resources/rotateRight.png</file>
+    </qresource>
+</RCC>

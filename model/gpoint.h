@@ -26,6 +26,7 @@ public:
     const QPoint toQPoint() const;
     const QString toString() const;
     GPoint operator+(const GPoint &other) const;
+    GPoint operator-() const;
     bool operator==(const GPoint &other) const;
     bool operator!=(const GPoint &other) const;
     operator QString();

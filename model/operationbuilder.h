@@ -15,6 +15,7 @@ class OperationBuilder
 public:
     OperationBuilder();
     OperationBuilder& translate(const double x, const double y);
+    OperationBuilder& translate(const GPoint);
     OperationBuilder& scale(const double scalar);
     OperationBuilder& rotate(const double degrees);
     Operation build(const GPoint reference = GPoint(0,0));

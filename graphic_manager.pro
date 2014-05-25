@@ -53,3 +53,10 @@ HEADERS  += \
 FORMS    += gui/mainwindow.ui \
     gui/additemdialog.ui \
     gui/edititemdialog.ui
+
+OTHER_FILES += \
+    resources/rotateLeft.png \
+    resources/rotateRight.png
+
+RESOURCES += \
+    application.qrc

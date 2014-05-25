@@ -1,4 +1,4 @@
-﻿#include "edititemdialog.h"
+﻿#include "gui/edititemdialog.h"
 #include "ui_edititemdialog.h"
 
 EditItemDialog::EditItemDialog(ApplicationController *controller, QWidget *parent) :

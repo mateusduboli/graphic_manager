@@ -16,6 +16,11 @@ OperationBuilder &OperationBuilder::translate(const double x, const double y)
     return *this;
 }
 
+OperationBuilder &OperationBuilder::translate(const GPoint point)
+{
+    return this->translate(point.x(), point.y());
+}
+
 OperationBuilder &OperationBuilder::scale(const double scalar)
 {
     this->matrix = mult(this->matrix, scalingMatrix(scalar));

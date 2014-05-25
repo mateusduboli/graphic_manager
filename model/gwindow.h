@@ -6,9 +6,10 @@
 #include <QVector>
 #include <QObject>
 
+#include "model/types.h"
 #include "model/gpoint.h"
 #include "model/gobject.h"
-#include "model/types.h"
+#include "model/operationbuilder.h"
 
 class GWindow : public QObject
 {
@@ -23,6 +24,7 @@ public:
     const GPoint center() const;
     void clearZoomFactor();
     void clearCenter();
+    void rotate(const double degrees);
     void moveCenter(const GPoint& movement);
     void addZoomFactor(const double &zoomFactor);
     void updateFramebuffer(QVector<GObject> *displayFile);
@@ -34,9 +36,11 @@ private:
     double _height;
     double _width;
     double _zoomFactor;
+    double _angle;
     GPoint _center;
     QVector<GObject> _framebuffer;
     std::function<GPoint (QSize, GPoint)> vpTransformation;
+    std::function<GPoint (double, GPoint, GPoint)> ppcTransformation;
 };
 
 #endif // GWINDOW_H

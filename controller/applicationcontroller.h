@@ -29,6 +29,8 @@ public:
     void editObject(const QModelIndex &index);
     void buildObject(const QString &name);
     void buildOperation();
+    void rotateClock(const double degrees);
+    void rotateCounterClock(const double degrees);
     void createOperationScale(const double factor);
     void createOperationRotate(const double degrees);
     void createOperationTranslate(const double x, const double y);

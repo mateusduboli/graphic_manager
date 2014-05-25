@@ -1,4 +1,4 @@
-﻿#include "mainwindow.h"
+﻿#include "gui/mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(ApplicationController *controller, QWidget *parent) :
@@ -33,13 +33,31 @@ MainWindow::MainWindow(ApplicationController *controller, QWidget *parent) :
     connect(ui->moveRightPushButton, &QPushButton::clicked, this->controller, &ApplicationController::moveRight);
     connect(this->controller, &ApplicationController::centerChanged, ui->positionLineEdit, &QLineEdit::setText);
 
+    // Rotate connections
+    connect(ui->clockwiseRotatePushButton, &QPushButton::clicked, this, &MainWindow::onRotateClockButtonClicked);
+    connect(ui->counterClockwiseRotatePushButton, &QPushButton::clicked, this, &MainWindow::onRotateCounterclockButtonClicked);
+
     // Edit connections
     connect(ui->listView, &QListView::doubleClicked, this->editItem, &EditItemDialog::openAtIndex);
 
     qDebug() << "[MainWindow] finished constructor";
 }
 
+
+
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::onRotateClockButtonClicked()
+{
+    double degrees = ui->rotateLineEdit->text().toDouble();
+    this->controller->rotateClock(degrees);
+}
+
+void MainWindow::onRotateCounterclockButtonClicked()
+{
+    double degrees = ui->rotateLineEdit->text().toDouble();
+    this->controller->rotateCounterClock(degrees);
 }
