@@ -15,14 +15,6 @@ ApplicationController::ApplicationController(QObject *parent):
 void ApplicationController::sampleObjects()
 {
     qDebug() << "[ApplicationController] creating sample objects";
-    this->displayFile.append(GObject("X axis", {{
-                                                    GPoint(0,-200),
-                                                    GPoint(0,200)
-                                                }}));
-    this->displayFile.append(GObject("Y axis", {{
-                                                    GPoint(-200,0),
-                                                    GPoint(200,0)
-                                                }}));
     this->displayFile.append(GObject("Sample square", {{
                                                            GPoint(-10,-10),
                                                            GPoint(10,-10),

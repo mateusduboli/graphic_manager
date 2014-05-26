@@ -8,15 +8,15 @@ GWindow::GWindow(QObject* parent, const GPoint &center, const QSizeF &size):
     _angle(0),
     _center(center)
 {
-    this->vpTransformation = [this] (QSize viewPortSize, GPoint point) -> GPoint {
-        double x = ((point.x() - this->min().x())/(this->width())) * viewPortSize.width();
-        double y = (1 - (point.y() - this->min().y())/(this->height()))*viewPortSize.height();
+    this->vpTransformation = [] (GPoint min, QSizeF windowSize, QSize viewPortSize, GPoint point) -> GPoint {
+        double x = ((point.x() - min.x())/windowSize.width())*viewPortSize.width();
+        double y = (1 - (point.y() - min.y())/windowSize.height())*viewPortSize.height();
         return GPoint(x, y);
     };
-    this->ppcTransformation = [&] (const double angle, GPoint windowCenter, GPoint point) -> GPoint {
+    this->ppcTransformation = [] (double angle, GPoint windowCenter, GPoint point) -> GPoint {
         OperationBuilder builder;
         builder.translate(-windowCenter);
-        builder.rotate(angle);
+        builder.rotate(-angle);
         Operation op = builder.build();
         return op(point);
     };
@@ -51,10 +51,15 @@ const GPoint GWindow::center() const
     return this->_center;
 }
 
+const QSizeF GWindow::size() const
+{
+    return QSizeF(this->width(), this->height());
+}
+
 void GWindow::updateFramebuffer(QVector<GObject> *displayFile)
 {
     this->_framebuffer.clear();
-    auto op = std::bind1st(this->ppcTransformation, 0);
+    Operation op = bind(this->ppcTransformation, this->_angle, this->center(), placeholders::_1);
     for(GObject object : *displayFile)
     {
         this->_framebuffer.append(object.transform(op));
@@ -79,7 +84,9 @@ void GWindow::rotate(const double degrees)
 
 void GWindow::moveCenter(const GPoint &movement)
 {
-    this->_center = this->_center + movement;
+    OperationBuilder builder;
+    Operation op = builder.rotate(-this->_angle).translate(movement).rotate(this->_angle).build();
+    this->_center = op(this->_center);
 }
 
 void GWindow::addZoomFactor(const double &zoomFactor)
@@ -100,5 +107,5 @@ QVector<GObject> GWindow::framebuffer() const
 Operation GWindow::viewPortTransformation(const QSize viewPortSize)
 {
     qDebug() <<  "[GWindow] The view port size is: " << viewPortSize;
-    return std::bind1st(this->vpTransformation, viewPortSize);
+    return bind(this->vpTransformation, this->min(), this->size(), viewPortSize, placeholders::_1);
 }

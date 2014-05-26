@@ -11,6 +11,8 @@
 #include "model/gobject.h"
 #include "model/operationbuilder.h"
 
+using namespace std;
+
 class GWindow : public QObject
 {
     Q_OBJECT
@@ -19,6 +21,7 @@ public:
     double height() const;
     double width() const;
     double zoomFactor() const;
+    const QSizeF size() const;
     const GPoint max() const;
     const GPoint min() const;
     const GPoint center() const;
@@ -39,8 +42,8 @@ private:
     double _angle;
     GPoint _center;
     QVector<GObject> _framebuffer;
-    std::function<GPoint (QSize, GPoint)> vpTransformation;
-    std::function<GPoint (double, GPoint, GPoint)> ppcTransformation;
+    function<GPoint (GPoint, QSizeF, QSize, GPoint)> vpTransformation;
+    function<GPoint (double, GPoint, GPoint)> ppcTransformation;
 };
 
 #endif // GWINDOW_H

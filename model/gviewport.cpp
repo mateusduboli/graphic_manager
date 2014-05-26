@@ -22,4 +22,11 @@ void GViewport::paintEvent(QPaintEvent*/*event*/)
     {
         painter.drawPolygon(object.transform(op).toQPolygon());
     }
+    int min = 0;
+    int mid = this->size().width() / 2;
+    int max = this->size().width();
+    painter.setPen(Qt::red);
+    painter.drawLine(min, mid, max, mid); //X Axis
+    painter.setPen(Qt::red);
+    painter.drawLine(mid, min, mid, max); //Y Axis
 }

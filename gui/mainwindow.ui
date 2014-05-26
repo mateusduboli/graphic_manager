@@ -131,7 +131,7 @@
              <string>←</string>
             </property>
             <property name="shortcut">
-             <string>Up</string>
+             <string>Left</string>
             </property>
            </widget>
           </item>
