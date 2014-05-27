@@ -13,6 +13,7 @@
 #include "controller/operationlistmodel.h"
 
 #define ZOOM_STEP 0.05
+#define ROTATE_STEP 5
 
 class ApplicationController : public QObject
 {
@@ -29,8 +30,6 @@ public:
     void editObject(const QModelIndex &index);
     void buildObject(const QString &name);
     void buildOperation();
-    void rotateClock(const double degrees);
-    void rotateCounterClock(const double degrees);
     void createOperationScale(const double factor);
     void createOperationRotate(const double degrees);
     void createOperationTranslate(const double x, const double y);
@@ -44,9 +43,12 @@ public slots:
     void moveUp();
     void moveDown();
     void moveRight();
+    void rotateClock();
+    void rotateCounterclock();
 signals:
     void zoomChanged(const QString &zoomStringValue);
     void centerChanged(const QString &centerStringValue);
+    void angleChanged(const QString &angleStringValue);
     void selectedObjectChanged(const QString &name);
     void operationBuildt(const GObject* object);
 };

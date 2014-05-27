@@ -30,6 +30,7 @@ void ApplicationController::refreshWindow()
     this->window.updateFramebuffer(&this->displayFile.objects);
     emit this->zoomChanged(QString::number(this->window.zoomFactor() * 100) + "%");
     emit this->centerChanged(this->window.center().toString());
+    emit this->angleChanged(QString::number(this->window.angle()) + "°");
 }
 
 void ApplicationController::createOperationScale(const double factor)
@@ -118,7 +119,7 @@ void ApplicationController::centerPosition()
 void ApplicationController::moveLeft()
 {
     qDebug() << "[ApplicationController] moving window left";
-    this->window.moveCenter(GPoint(-1,0));
+    this->window.move(GPoint(-1,0));
     qDebug() << "[ApplicationController] center: " << this->window.center();
     this->refreshWindow();
 }
@@ -126,7 +127,7 @@ void ApplicationController::moveLeft()
  void ApplicationController::moveUp()
 {
     qDebug() << "[ApplicationController] moving window up";
-    this->window.moveCenter(GPoint(0,-1));
+    this->window.move(GPoint(0,-1));
     qDebug() << "[ApplicationController] center: " << this->window.center();
     this->refreshWindow();
 }
@@ -134,7 +135,7 @@ void ApplicationController::moveLeft()
 void ApplicationController::moveDown()
 {
     qDebug() << "[ApplicationController] moving window down";
-    this->window.moveCenter(GPoint(0,1));
+    this->window.move(GPoint(0,1));
     qDebug() << "[ApplicationController] center: " << this->window.center();
     this->refreshWindow();
 }
@@ -142,22 +143,23 @@ void ApplicationController::moveDown()
 void ApplicationController::moveRight()
 {
     qDebug() << "[ApplicationController] moving window right";
-    this->window.moveCenter(GPoint(1,0));
+    this->window.move(GPoint(1,0));
     qDebug() << "[ApplicationController] center: " << this->window.center();
     this->refreshWindow();
 }
 
-void ApplicationController::rotateClock(const double degrees)
+
+void ApplicationController::rotateClock()
 {
     qDebug() << "[ApplicationController] rotating window";
-    this->window.rotate(degrees);
+    this->window.rotate(ROTATE_STEP);
     this->refreshWindow();
 }
 
-void ApplicationController::rotateCounterClock(const double degrees)
+void ApplicationController::rotateCounterclock()
 {
     qDebug() << "[ApplicationController] rotating window";
-    this->window.rotate(-degrees);
+    this->window.rotate(-ROTATE_STEP);
     this->refreshWindow();
 }
 

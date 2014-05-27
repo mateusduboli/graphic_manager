@@ -34,8 +34,9 @@ MainWindow::MainWindow(ApplicationController *controller, QWidget *parent) :
     connect(this->controller, &ApplicationController::centerChanged, ui->positionLineEdit, &QLineEdit::setText);
 
     // Rotate connections
-    connect(ui->clockwiseRotatePushButton, &QPushButton::clicked, this, &MainWindow::onRotateClockButtonClicked);
-    connect(ui->counterClockwiseRotatePushButton, &QPushButton::clicked, this, &MainWindow::onRotateCounterclockButtonClicked);
+    connect(ui->clockwiseRotatePushButton, &QPushButton::clicked, this->controller, &ApplicationController::rotateClock);
+    connect(ui->counterClockwiseRotatePushButton, &QPushButton::clicked, this->controller, &ApplicationController::rotateCounterclock);
+    connect(this->controller, &ApplicationController::angleChanged, ui->rotateLineEdit, &QLineEdit::setText);
 
     // Edit connections
     connect(ui->listView, &QListView::doubleClicked, this->editItem, &EditItemDialog::openAtIndex);
@@ -48,16 +49,4 @@ MainWindow::MainWindow(ApplicationController *controller, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::onRotateClockButtonClicked()
-{
-    double degrees = ui->rotateLineEdit->text().toDouble();
-    this->controller->rotateClock(degrees);
-}
-
-void MainWindow::onRotateCounterclockButtonClicked()
-{
-    double degrees = ui->rotateLineEdit->text().toDouble();
-    this->controller->rotateCounterClock(degrees);
 }

@@ -22,6 +22,11 @@ GWindow::GWindow(QObject* parent, const GPoint &center, const QSizeF &size):
     };
 }
 
+double GWindow::angle() const
+{
+    return this->_angle;
+}
+
 double GWindow::height() const
 {
     return this->_height * this->_zoomFactor;
@@ -82,16 +87,16 @@ void GWindow::rotate(const double degrees)
     this->_angle += degrees;
 }
 
-void GWindow::moveCenter(const GPoint &movement)
+void GWindow::move(const GPoint movement)
 {
     OperationBuilder builder;
-    Operation op = builder.rotate(-this->_angle).translate(movement).rotate(this->_angle).build();
-    this->_center = op(this->_center);
+    GPoint oa = builder.rotate(this->_angle).build()(movement);
+    this->_center = this->_center + oa;
 }
 
-void GWindow::addZoomFactor(const double &zoomFactor)
+void GWindow::addZoomFactor(const double factor)
 {
-    this->_zoomFactor += zoomFactor;
+    this->_zoomFactor += factor;
 }
 
 double GWindow::zoomFactor() const

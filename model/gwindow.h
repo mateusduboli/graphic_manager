@@ -20,6 +20,7 @@ public:
     explicit GWindow(QObject* parent = 0, const GPoint &center = GPoint(0,0), const QSizeF &size = QSizeF(100,100));
     double height() const;
     double width() const;
+    double angle() const;
     double zoomFactor() const;
     const QSizeF size() const;
     const GPoint max() const;
@@ -28,8 +29,8 @@ public:
     void clearZoomFactor();
     void clearCenter();
     void rotate(const double degrees);
-    void moveCenter(const GPoint& movement);
-    void addZoomFactor(const double &zoomFactor);
+    void move(const GPoint movement);
+    void addZoomFactor(const double factor);
     void updateFramebuffer(QVector<GObject> *displayFile);
     QVector<GObject> framebuffer() const;
     Operation viewPortTransformation(const QSize viewPortSize);
