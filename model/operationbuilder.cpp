@@ -33,6 +33,12 @@ OperationBuilder &OperationBuilder::rotate(const double degrees)
     return *this;
 }
 
+OperationBuilder &OperationBuilder::clear()
+{
+    this->matrix = Matrix(IDENTITY);
+    return *this;
+}
+
 Operation OperationBuilder::build(const GPoint reference)
 {
     double x = reference.x();

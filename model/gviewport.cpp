@@ -27,6 +27,6 @@ void GViewport::paintEvent(QPaintEvent*/*event*/)
     int max = this->size().width();
     painter.setPen(Qt::red);
     painter.drawLine(min, mid, max, mid); //X Axis
-    painter.setPen(Qt::red);
+    painter.setPen(Qt::blue);
     painter.drawLine(mid, min, mid, max); //Y Axis
 }

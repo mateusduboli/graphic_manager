@@ -152,14 +152,14 @@ void ApplicationController::moveRight()
 void ApplicationController::rotateClock()
 {
     qDebug() << "[ApplicationController] rotating window";
-    this->window.rotate(ROTATE_STEP);
+    this->window.rotate(-ROTATE_STEP);
     this->refreshWindow();
 }
 
 void ApplicationController::rotateCounterclock()
 {
     qDebug() << "[ApplicationController] rotating window";
-    this->window.rotate(-ROTATE_STEP);
+    this->window.rotate(ROTATE_STEP);
     this->refreshWindow();
 }
 

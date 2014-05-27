@@ -13,6 +13,7 @@ GWindow::GWindow(QObject* parent, const GPoint &center, const QSizeF &size):
         double y = (1 - (point.y() - min.y())/windowSize.height())*viewPortSize.height();
         return GPoint(x, y);
     };
+
     this->ppcTransformation = [] (double angle, GPoint windowCenter, GPoint point) -> GPoint {
         OperationBuilder builder;
         builder.translate(-windowCenter);
@@ -64,10 +65,10 @@ const QSizeF GWindow::size() const
 void GWindow::updateFramebuffer(QVector<GObject> *displayFile)
 {
     this->_framebuffer.clear();
-    Operation op = bind(this->ppcTransformation, this->_angle, this->center(), placeholders::_1);
+    Operation ppc = bind(this->ppcTransformation, this->_angle, this->center(), placeholders::_1);
     for(GObject object : *displayFile)
     {
-        this->_framebuffer.append(object.transform(op));
+        this->_framebuffer.append(object.transform(ppc));
     }
     emit this->framebufferChanged();
 }
@@ -90,8 +91,8 @@ void GWindow::rotate(const double degrees)
 void GWindow::move(const GPoint movement)
 {
     OperationBuilder builder;
-    GPoint oa = builder.rotate(this->_angle).build()(movement);
-    this->_center = this->_center + oa;
+    GPoint shift = builder.rotate(this->_angle).build()(movement);
+    this->_center = builder.clear().translate(shift).build()(this->_center);
 }
 
 void GWindow::addZoomFactor(const double factor)

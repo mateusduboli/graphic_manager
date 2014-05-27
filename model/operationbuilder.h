@@ -18,6 +18,7 @@ public:
     OperationBuilder& translate(const GPoint);
     OperationBuilder& scale(const double scalar);
     OperationBuilder& rotate(const double degrees);
+    OperationBuilder& clear();
     Operation build(const GPoint reference = GPoint(0,0));
 private:
     Matrix matrix;
